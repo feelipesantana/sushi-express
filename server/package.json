@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "generate": "drizzle-kit generate:pg",
-    "start": "bun run index.ts",
-    "dev": "bun --watch run index.ts",
+    "start": "bun run ./src/server.ts",
+    "dev": "bun --watch run ./src/server.ts",
     "migrate": "bun ./src/db/migrate.ts"
   },
   "devDependencies": {
@@ -16,6 +16,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/cors": "^0.8.0",
+    "@elysiajs/jwt": "^0.8.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.29.3",
     "postgres": "^3.4.3",
