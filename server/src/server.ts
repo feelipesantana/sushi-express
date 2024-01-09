@@ -2,6 +2,7 @@ import cors from "@elysiajs/cors";
 import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { getProfile } from "./http/routes/get-profile";
+import { registerCustomer } from "./http/routes/register-customer";
 
 const app = new Elysia().use(
   cors({
@@ -21,6 +22,7 @@ const app = new Elysia().use(
   })
 )
 .use(authenticate)
+.use(registerCustomer)
 .use(getProfile)
 app.listen(3333)
 console.log(`🔥 HTTP server running at ${app.server?.hostname}:${app.server?.port}`)
