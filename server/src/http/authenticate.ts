@@ -15,8 +15,6 @@ const jwtPayloadSchema = z.object({
   restaurantId: z.string().optional()
 })
 
-
-
 export const authenticate = new Elysia()
 .error({
   UNAUTHORIZED:UnauthorizedError,

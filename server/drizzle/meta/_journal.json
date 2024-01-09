@@ -15,6 +15,13 @@
       "when": 1704775649008,
       "tag": "0001_cuddly_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704832281966,
+      "tag": "0002_powerful_hellcat",
+      "breakpoints": true
     }
   ]
 }
