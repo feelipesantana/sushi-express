@@ -32,10 +32,9 @@ export const registerCustomer = new Elysia().post('/customers',
     })
 
     if(!create){
-      throw new RegisterError()
       set.status = 400
+      throw new RegisterError()
     }
-
     set.status = 201
   }
 )

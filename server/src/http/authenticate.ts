@@ -1,18 +1,14 @@
-import Elysia from 'elysia'
+import Elysia, { type Static, t } from 'elysia'
 import jwt from '@elysiajs/jwt'
 import cookie from '@elysiajs/cookie'
 import { env } from '../env'
 import { z } from 'zod'
 import { UnauthorizedError } from './routes/errors/unauthorized-error'
 import { NotAManagerError } from './routes/errors/not-a-manager-error'
-import { db } from '../db/connection'
-import { eq } from 'drizzle-orm';
 
-import { users } from '../db/schemas'
-
-const jwtPayloadSchema = z.object({
-  sub: z.string(),
-  restaurantId: z.string().optional()
+const jwtPayloadSchema = t.Object({
+  sub: t.String(),
+  restaurantId: t.Optional(t.String())
 })
 
 export const authenticate = new Elysia()
@@ -32,42 +28,45 @@ export const authenticate = new Elysia()
 .use(
   jwt({
     name: 'jwt',
-    secret: env.JWT_SECRET
+    secret: env.JWT_SECRET,
+    schema: jwtPayloadSchema
+
   })
 )
 .use(cookie())
-.post('/auth', async ({ jwt, cookie, setCookie, body,request }) => {
+.derive(({ jwt, cookie, setCookie, removeCookie }) => {
+  return {
+    getCurrentUser: async () => {
+      const payload = await jwt.verify(cookie.auth)
 
-  const authSchemaZod = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
-  const {email, password} = authSchemaZod.parse(body)  
+      if (!payload) {
+        throw new UnauthorizedError()
+      }
 
-  const getEmail = await db.query.users.findFirst({
-    where: eq(users.email, email) && eq(users.password, password)
-  })
-
-  if(!getEmail){
-    throw new UnauthorizedError()
+      return payload
+    },
+    signUser: async (payload: Static<typeof jwtPayloadSchema>) => {
+      setCookie('auth', await jwt.sign(payload), {
+        httpOnly: true,
+        maxAge: 7 * 86400,
+        path: '/',
+      })
+    },
+    signOut: () => {
+      removeCookie('auth')
+    },
   }
-
-  console.log("TESTE", getEmail)
-  setCookie('auth', await jwt.sign({email}), {
-      httpOnly: true,
-      maxAge: 7 * 86400,
-  })
-
-  return `Sign in as ${cookie.auth}`
 })
-.get('/profile', async ({ jwt, set, cookie: { auth } }) => {
+.derive(({ getCurrentUser }) => {
+  return {
+    getManagedRestaurantId: async () => {
+      const { restaurantId } = await getCurrentUser()
 
-  const profile = await jwt.verify(auth)
+      if (!restaurantId) {
+        throw new NotAManagerError()
+      }
 
-  if (!profile) {
-    set.status = 401
-    return 'Unauthorized'
+      return restaurantId
+    },
   }
-
-  return `Hello ${profile.email}`
 })

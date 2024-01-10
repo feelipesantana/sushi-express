@@ -26,5 +26,5 @@ export const productsRelations = relations(products, ({one, many}) =>({
     references: [restaurants.id],
     relationName: 'productRestaurant'
   }),
-  orderItems: many(orderItems)
+  // orderItems: many(orderItems)
 }))
