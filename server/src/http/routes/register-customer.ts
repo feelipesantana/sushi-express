@@ -22,18 +22,13 @@ export const registerCustomer = new Elysia().post('/customers',
   async ({body, set})=>{
 
 
-    const {name, email, phone, password} = registerCustomerBodySchema.parse(body)
-    const newPass = await Bun.password.hash(password)
-
-    if(!newPass){
-      throw new Error()
-    }
+    const {name, email, phone} = registerCustomerBodySchema.parse(body)
+    
 
     const create = await db.insert(users).values({
       name,
       email,
       phone,
-      password: newPass
     })
 
     if(!create){
