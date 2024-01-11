@@ -3,6 +3,8 @@ import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { getProfile } from "./http/routes/get-profile";
 import { registerCustomer } from "./http/routes/register-customer";
+import { registerRestaurant } from "./http/routes/register-restaurant";
+import { sendAuthenticationLink } from "./http/routes/send-authentication-link";
 
 const app = new Elysia().use(
   cors({
@@ -22,6 +24,8 @@ const app = new Elysia().use(
   })
 )
 .use(authenticate)
+.use(registerRestaurant)
+.use(sendAuthenticationLink)
 .use(registerCustomer)
 .use(getProfile)
 app.listen(3333)
