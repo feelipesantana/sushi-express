@@ -6,6 +6,8 @@ import { z } from 'zod'
 import { api } from '@/services/api'
 import { useToast } from "@/components/ui/use-toast"
 import { Toaster } from '@/components/ui/toaster'
+import { useMutation } from '@tanstack/react-query'
+import { signIn } from '@/api/sign-in'
 
 const singFormSchema = z.object({
     email: z.string().min(1).email()
@@ -21,21 +23,20 @@ export function SignIn() {
         formState: { isSubmitting },
     } = useForm<SignInForm>()
 
+    const { mutateAsync: authenticate } = useMutation({
+        mutationFn: signIn
+    })
     const handleSubmitForm = async (data: SignInForm) => {
         console.log(data.email)
         const email = data.email
+
         try {
-            const response = await api.post("/authenticate", {
-                email
+            await authenticate({ email })
+            toast({
+                title: "Sent Email",
+                description: "We sent a link to authenticate by your email!",
+
             })
-
-            if (response.status === 200) {
-                toast({
-                    title: "Sent Email",
-                    description: "We sent a link to authenticate by your email!",
-                })
-            }
-
         } catch (err) {
             console.error(err)
         }
