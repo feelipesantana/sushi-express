@@ -1,6 +1,7 @@
 import cors from "@elysiajs/cors";
 import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
+import { authenticateFromLink } from "./http/routes/authenticate-from-link";
 import { getProfile } from "./http/routes/get-profile";
 import { registerCustomer } from "./http/routes/register-customer";
 import { registerRestaurant } from "./http/routes/register-restaurant";
@@ -26,6 +27,7 @@ const app = new Elysia()
 	.use(authenticate)
 	.use(registerRestaurant)
 	.use(sendAuthenticationLink)
+	.use(authenticateFromLink)
 	.use(registerCustomer)
 	.use(getProfile);
 app.listen(3333);

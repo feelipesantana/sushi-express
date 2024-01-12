@@ -1,5 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import Elysia, { t } from "elysia";
+import { set } from "zod";
 import { db } from "../../db/connection";
 import { authLinks } from "../../db/schemas/auth-links";
 import { env } from "../../env";
@@ -9,7 +10,7 @@ import { UnauthorizedError } from "./errors/unauthorized-error";
 
 export const sendAuthenticationLink = new Elysia().post(
 	"/authenticate",
-	async ({ body }) => {
+	async ({ body, set }) => {
 		const { email } = body;
 
 		console.log("passou aqui", email);
@@ -35,8 +36,6 @@ export const sendAuthenticationLink = new Elysia().post(
 		authLink.searchParams.set("code", authLinkCode);
 		authLink.searchParams.set("redirect", env.AUTH_REDIRECT_URL);
 
-		console.log(authLink.toString());
-
 		await resent.emails.send({
 			from: "Pizza Shop <onboarding@resend.dev>",
 			to: email,
@@ -46,6 +45,8 @@ export const sendAuthenticationLink = new Elysia().post(
 				authLink: authLink.toString(),
 			}),
 		});
+
+		set.status = 200;
 	},
 	{
 		body: t.Object({

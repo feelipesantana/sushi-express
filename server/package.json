@@ -24,6 +24,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@react-email/components": "^0.0.12",
     "@types/react": "^18.2.47",
+    "dayjs": "^1.11.10",
     "drizzle-orm": "^0.29.3",
     "postgres": "^3.4.3",
     "resend": "^2.1.0",
