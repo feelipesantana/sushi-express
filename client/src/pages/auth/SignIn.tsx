@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Link, redirect, useNavigate, useNavigation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { api } from '@/services/api'
 import { useToast } from "@/components/ui/use-toast"
 import { Toaster } from '@/components/ui/toaster'
 import { useMutation } from '@tanstack/react-query'
@@ -16,7 +15,6 @@ const singFormSchema = z.object({
 type SignInForm = z.infer<typeof singFormSchema>
 export function SignIn() {
     const { toast } = useToast()
-
     const {
         register,
         handleSubmit,
@@ -35,7 +33,6 @@ export function SignIn() {
             toast({
                 title: "Sent Email",
                 description: "We sent a link to authenticate by your email!",
-
             })
         } catch (err) {
             console.error(err)
