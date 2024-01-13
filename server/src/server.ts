@@ -3,6 +3,7 @@ import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { authenticateFromLink } from "./http/routes/authenticate-from-link";
 import { getManagedRestaurant } from "./http/routes/get-managed-restaurant";
+import { getMonthOrdersAmount } from "./http/routes/get-month-orders-amount";
 import { getMonthReceipt } from "./http/routes/get-month-receipt";
 import { getProfile } from "./http/routes/get-profile";
 import { registerCustomer } from "./http/routes/register-customer";
@@ -36,6 +37,7 @@ const app = new Elysia()
 	.use(registerRestaurant)
 	.use(getManagedRestaurant)
 
+	.use(getMonthOrdersAmount)
 	.use(getMonthReceipt)
 	.use(getProfile)
 
