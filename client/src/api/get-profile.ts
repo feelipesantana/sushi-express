@@ -12,5 +12,4 @@ export interface GetProfileResponse {
 export async function getProfile(){
     const response = await api.get<GetProfileResponse>("me")
     if(response) return response.data
-    
 }
