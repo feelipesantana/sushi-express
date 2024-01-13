@@ -1,12 +1,14 @@
 import dayjs from "dayjs";
-import Elysia from "elysia";
+import { eq } from "drizzle-orm";
+import Elysia, { t } from "elysia";
 import { db } from "../../db/connection";
+import { authLinks } from "../../db/schemas";
 import { authenticate } from "../authenticate";
 import { UnauthorizedError } from "./errors/unauthorized-error";
 
-export const authenticateFromLink = new Elysia()
-	.use(authenticate)
-	.get("/auth-links/authenticate", async ({ signUser, query, set }) => {
+export const authenticateFromLink = new Elysia().use(authenticate).get(
+	"/auth-links/authenticate",
+	async ({ signUser, query, set }) => {
 		const { code, redirect } = query;
 
 		if (!code) {
@@ -37,5 +39,14 @@ export const authenticateFromLink = new Elysia()
 			restaurantId: managedRestaurant?.id,
 		});
 
+		await db.delete(authLinks).where(eq(authLinks.code, code));
+
 		set.redirect = redirect;
-	});
+	},
+	{
+		query: t.Object({
+			code: t.String(),
+			redirect: t.String(),
+		}),
+	},
+);

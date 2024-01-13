@@ -38,7 +38,7 @@ export const authenticate = new Elysia()
 		return {
 			getCurrentUser: async () => {
 				const payload = await jwt.verify(cookie.auth);
-
+				console.log("PAYLOAD", payload);
 				if (!payload) {
 					throw new UnauthorizedError();
 				}
@@ -61,7 +61,7 @@ export const authenticate = new Elysia()
 		return {
 			getManagedRestaurantId: async () => {
 				const { restaurantId } = await getCurrentUser();
-
+				console.log("RESTAURANT", restaurantId);
 				if (!restaurantId) {
 					throw new NotAManagerError();
 				}

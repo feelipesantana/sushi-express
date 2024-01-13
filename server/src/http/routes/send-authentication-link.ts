@@ -13,14 +13,12 @@ export const sendAuthenticationLink = new Elysia().post(
 	async ({ body, set }) => {
 		const { email } = body;
 
-		console.log("passou aqui", email);
 		const userFromEmail = await db.query.users.findFirst({
 			where(fields, { eq }) {
 				return eq(fields.email, email);
 			},
 		});
 
-		console.log("finded", userFromEmail);
 		if (!userFromEmail) {
 			throw new UnauthorizedError();
 		}

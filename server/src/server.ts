@@ -2,10 +2,12 @@ import cors from "@elysiajs/cors";
 import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { authenticateFromLink } from "./http/routes/authenticate-from-link";
+import { getManagedRestaurant } from "./http/routes/get-managed-restaurant";
 import { getProfile } from "./http/routes/get-profile";
 import { registerCustomer } from "./http/routes/register-customer";
 import { registerRestaurant } from "./http/routes/register-restaurant";
 import { sendAuthenticationLink } from "./http/routes/send-authentication-link";
+import { signOut } from "./http/routes/sign-out";
 
 const app = new Elysia()
 	.use(
@@ -25,12 +27,16 @@ const app = new Elysia()
 		}),
 	)
 	.use(authenticate)
-	.use(registerRestaurant)
-	.use(sendAuthenticationLink)
 	.use(authenticateFromLink)
+	.use(sendAuthenticationLink)
+	.use(registerRestaurant)
+	.use(getManagedRestaurant)
 	.use(registerCustomer)
-	.use(getProfile);
+	.use(getProfile)
+	.use(signOut);
+
 app.listen(3333);
+
 console.log(
 	`🔥 HTTP server running at ${app.server?.hostname}:${app.server?.port}`,
 );
