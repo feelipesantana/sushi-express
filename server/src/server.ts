@@ -2,7 +2,9 @@ import cors from "@elysiajs/cors";
 import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { authenticateFromLink } from "./http/routes/authenticate-from-link";
+import { getDayOrdersAmount } from "./http/routes/get-day-orders-amount";
 import { getManagedRestaurant } from "./http/routes/get-managed-restaurant";
+import { getMonthCanceledOrdersAmount } from "./http/routes/get-month-canceled-orders-amount";
 import { getMonthOrdersAmount } from "./http/routes/get-month-orders-amount";
 import { getMonthReceipt } from "./http/routes/get-month-receipt";
 import { getProfile } from "./http/routes/get-profile";
@@ -37,8 +39,10 @@ const app = new Elysia()
 	.use(registerRestaurant)
 	.use(getManagedRestaurant)
 
-	.use(getMonthOrdersAmount)
 	.use(getMonthReceipt)
+	.use(getMonthOrdersAmount)
+	.use(getDayOrdersAmount)
+	.use(getMonthCanceledOrdersAmount)
 	.use(getProfile)
 
 	.use(signOut);

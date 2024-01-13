@@ -32,7 +32,6 @@ export const getMonthOrdersAmount = new Elysia()
 			.groupBy(sql`TO_CHAR(${orders.createdAt}, 'YYYY-MM')`)
 			.having(({ amount }) => gte(amount, 1));
 
-		console.log("HERE", ordersPerMonth);
 		const currentMonthOrdersAmount = ordersPerMonth.find((ordersInMonth) => {
 			return ordersInMonth.monthWithYear === currentMonthWithYear;
 		});
