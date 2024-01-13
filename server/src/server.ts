@@ -3,6 +3,7 @@ import Elysia from "elysia";
 import { authenticate } from "./http/authenticate";
 import { authenticateFromLink } from "./http/routes/authenticate-from-link";
 import { getManagedRestaurant } from "./http/routes/get-managed-restaurant";
+import { getMonthReceipt } from "./http/routes/get-month-receipt";
 import { getProfile } from "./http/routes/get-profile";
 import { registerCustomer } from "./http/routes/register-customer";
 import { registerRestaurant } from "./http/routes/register-restaurant";
@@ -29,10 +30,15 @@ const app = new Elysia()
 	.use(authenticate)
 	.use(authenticateFromLink)
 	.use(sendAuthenticationLink)
+
+	.use(registerCustomer)
+
 	.use(registerRestaurant)
 	.use(getManagedRestaurant)
-	.use(registerCustomer)
+
+	.use(getMonthReceipt)
 	.use(getProfile)
+
 	.use(signOut);
 
 app.listen(3333);
