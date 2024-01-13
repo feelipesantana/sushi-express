@@ -37,8 +37,6 @@ export const createOrder = new Elysia().use(authenticate).post(
 		});
 
 		const totalInCents = orderProducts.reduce((total, orderItem) => {
-			console.log(total);
-			console.log(orderItem.subtotalInCents);
 			return total + orderItem.subtotalInCents;
 		}, 0);
 

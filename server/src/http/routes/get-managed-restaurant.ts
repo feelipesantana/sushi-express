@@ -7,7 +7,6 @@ export const getManagedRestaurant = new Elysia()
 	.get("/managed-restaurant", async ({ getManagedRestaurantId }) => {
 		const restaurantId = await getManagedRestaurantId();
 
-		console.log("HERE", restaurantId);
 		const restaurant = await db.query.restaurants.findFirst({
 			where(fields, { eq }) {
 				return eq(fields.id, restaurantId);

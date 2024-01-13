@@ -16,9 +16,11 @@ export const getMonthReceipt = new Elysia()
 
 		const lastMonthWithYear = lastMonth.format("YYYY-MM");
 		const currentMonthWithYear = today.format("YYYY-MM");
+
+		console.log("restaurantId:", restaurantId);
 		const monthsReceipts = await db
 			.select({
-				monthWithYear: sql<string>`TO_CHAR(${orders.createdAt}), 'yyyy-MM`,
+				monthWithYear: sql<string>`TO_CHAR(${orders.createdAt}, 'YYYY-MM')`,
 				receipt: sum(orders.totalInCents).mapWith(Number),
 			})
 			.from(orders)
@@ -28,13 +30,13 @@ export const getMonthReceipt = new Elysia()
 					gte(orders.createdAt, startOfLastMonth.toDate()),
 				),
 			)
-			.groupBy(sql`TO_CHAR(${orders.createdAt}), 'yyyy-MM'`)
+			.groupBy(sql`TO_CHAR(${orders.createdAt}, 'YYYY-MM')`)
 			.having(({ receipt }) => gte(receipt, 1));
 
+		console.log(monthsReceipts);
 		const currentMonthReceipt = monthsReceipts.find((monthReceipt) => {
 			return monthReceipt.monthWithYear === currentMonthWithYear;
 		});
-
 		const lastMonthReceipt = monthsReceipts.find((monthReceipt) => {
 			return monthReceipt.monthWithYear === lastMonthWithYear;
 		});
