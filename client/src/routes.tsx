@@ -3,17 +3,39 @@ import { AuthLayout } from "./pages/_layouts/Auth";
 import { SignIn } from "./pages/auth/SignIn";
 import { AppLayout } from "./pages/_layouts/App";
 import { Dashboard } from "./pages/app/dashboard";
+import { SignUp } from "./pages/auth/SignUp";
+import { NotFound } from "./pages/404";
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path="/" element={<AuthLayout />}>
-        <Route path="sign-in" element={<SignIn />} />
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: '/',
+        element: <Dashboard />,
+      },
+      // {
+      //   path: '/orders',
+      //   element: <Orders />,
+      // },
+    ],
+  },
+  {
+    path: '/',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/sign-in',
+        element: <SignIn />,
+      },
+      {
+        path: '/sign-up',
+        element: <SignUp />,
+      },
 
-      </Route>
-      <Route path="/" element={<AppLayout />}>
-        <Route path="dashboard" element={<Dashboard />} />
-      </Route>
-    </>
-  )
-);
+
+    ],
+  },
+])

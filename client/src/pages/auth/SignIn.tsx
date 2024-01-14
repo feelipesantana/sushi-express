@@ -43,7 +43,7 @@ export function SignIn() {
             <Toaster />
 
             <Button variant={'ghost'} asChild className='absolute right-8 top-8'>
-                <Link to="/sing-up">New Local</Link>
+                <Link to="/sign-up">New Local</Link>
             </Button>
 
             <div className='flex w-[350px] flex-col justify-center gap-10'>
