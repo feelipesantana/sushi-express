@@ -17,7 +17,7 @@ export function Header() {
                     </NavLink>
                     <NavLink to="/orders" className="flex items-center gap-2 transition duration-200 hover:brightness-75">
                         <UtensilsCrossed className="h-4 w-4" />
-                        Requests
+                        Orders
                     </NavLink>
                 </nav>
                 <div className="ml-auto flex items-center space-x-2">

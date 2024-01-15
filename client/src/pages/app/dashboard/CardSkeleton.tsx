@@ -7,5 +7,4 @@ export function CardSkeleton() {
             <Skeleton className="h-4 w-52" />
         </>
     )
-
 }

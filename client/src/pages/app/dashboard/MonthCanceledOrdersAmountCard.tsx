@@ -20,7 +20,7 @@ export function MonthCanceledOrdersAmountCard() {
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-base font-semibold">
-                    Cancelamentos (mês)
+                    Cancel (mês)
                 </CardTitle>
                 {isLoadingMonthCanceledOrdersAmount ? (
                     <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
@@ -37,7 +37,7 @@ export function MonthCanceledOrdersAmountCard() {
                         <p className="text-xs text-muted-foreground">
                             <span
                                 className={
-                                    monthCanceledOrdersAmount.diffFromYesterday < 0
+                                    monthCanceledOrdersAmount.diffFromLastMonth < 0
                                         ? 'text-emerald-500'
                                         : 'text-red-500'
                                 }

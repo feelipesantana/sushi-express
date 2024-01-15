@@ -13,7 +13,7 @@ export function DayOrdersAmountCard() {
     return (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-base font-semibold">Pedidos (dia)</CardTitle>
+                <CardTitle className="text-base font-semibold">Orders (day)</CardTitle>
                 {isLoadingDayOrdersAmount ? (
                     <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                 ) : (
