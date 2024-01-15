@@ -1,5 +1,5 @@
 import { getOrders } from "@/api/get-orders"
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2Icon } from "lucide-react"
 import { useSearchParams } from "react-router-dom"
@@ -54,6 +54,9 @@ export function Orders() {
                                 <TableHead className="w-[132px]"></TableHead>
                             </TableRow>
                         </TableHeader>
+                        <TableBody>
+                            {isLoadingOrders && !result && <div></div>}
+                        </TableBody>
                     </Table>
                 </div>
             </div>

@@ -6,7 +6,6 @@ export const registerRestaurant = new Elysia().post(
 	"/restaurants",
 	async ({ body, set }) => {
 		const { restaurantName, managerName, email, phone } = body;
-
 		const [manager] = await db
 			.insert(users)
 			.values({

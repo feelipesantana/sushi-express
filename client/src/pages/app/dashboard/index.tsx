@@ -1,5 +1,5 @@
 import { DayOrdersAmountCard } from "./DayOrdersAmountCard";
-import { MonthCanceledOrdersAmountCard } from "./MonthCanceledOrdersAmountCard copy";
+import { MonthCanceledOrdersAmountCard } from "./MonthCanceledOrdersAmountCard";
 import { MonthOrdersAmountCard } from "./MonthOrdersAmountCard";
 import { MonthReceiptCard } from "./MonthReceiptCard";
 import { PopularProductsChart } from "./PopularProductsChart";
